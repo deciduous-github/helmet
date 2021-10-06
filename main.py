@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 
-
 # Todo ヘルメットの位置を更新
 # todo 複数人の検索
 """
@@ -23,7 +22,14 @@ names = \
 
 dataframe = pd.DataFrame(names)
 
-who = st.text_input(label='検索したいひとの名前を入れてください', value='田上')
+who = st.text_input(label='検索したい人の名前を入れてください', value='田上')
+
+
+def len_who():
+    if '\u3000' in who:
+        who_list = who.split('\u3000')
+    else:
+        who_list = who.split(' ')
 
 
 def search_for_name(who_to_search):
@@ -43,3 +49,7 @@ def cell_style(value):
 
 st.dataframe(dataframe.style.applymap(cell_style))
 st.write('input: ', search_for_name(who))
+
+'''
+2021/10/3 ver1公開！ 一人だけ検索できるようになりました。
+'''

@@ -3,12 +3,10 @@ import streamlit as st
 
 # Todo ヘルメットの位置を更新
 # todo 複数人の検索
-
-'''
+"""
 ヘルメットの位置を探します
-'''
-
-names = \
+"""
+names_list = \
     [['藤井', '原田', '奥田', '田中', '向中野', '山本', '平野', '高間', '吉澤', '三矢', '西海', '中', '宇野', '井沢', '中島', '中山', '松本', '高村', '井上',
       '松浦'],
      ['安藤', '平川', '張', '?', '星子', '大志民', '志田', '島田', ' 横田', '水沢', '津村', '高坂', '吉田(研)', '白川', '戸田(克)', '片山(博)', '望月',
@@ -22,9 +20,32 @@ names = \
      ['加来', '井本', '小野口', '田上', '石橋', '上田', '金子', '近藤', '早川', '宮園', '坂下', '伊藤', '村上(一)', '宮之原', '青木', '?', '平', '?',
       '前田', '吉田直斗']]
 
-dataframe = pd.DataFrame(names)
+dataframe = pd.DataFrame(names_list)
 
 who = st.text_input(label='検索したい人の名前を入れてください', value='田上')
+
+
+class Search(object):
+    def __init__(self, who='田上', who_to_search='tagami', names=None):
+        self.who = who
+        self.who_to_search = who_to_search
+        self.names = names
+
+    @staticmethod
+    def len_who():
+        if '\u3000' in who:
+            who_list = who.split('\u3000')
+        else:
+            who_list = who.split(' ')
+
+        return who_list
+
+    def search_for_name(who_to_search):
+        for index, name in enumerate(names_list):
+            for index2, name2 in enumerate(name):
+                if name2 == str(who_to_search):
+                    # print(index, index2, name2)
+                    return index, index2, name2
 
 
 def search_for_name(who_to_search):
